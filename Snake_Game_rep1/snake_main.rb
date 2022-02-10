@@ -13,6 +13,11 @@ class Snake
   def initialize
     @coordinates = [[2,0], [2,1], [2,2], [2,3]]
     @which_way = 'down'
+    @ate = false
+  end
+
+  def feed
+    @ate = true
   end
 
   def draw
@@ -44,6 +49,14 @@ class Snake
     end
   end
 
+  def head_x
+    head_pos[0]
+  end
+
+  def head_y
+    head_pos[1]
+  end
+
   private
 
   def cords_mod(x, y)
@@ -53,7 +66,6 @@ class Snake
   def head_pos
     @coordinates.last
   end
-
 end
 
 class Game_elements
@@ -63,9 +75,12 @@ class Game_elements
     @apple_y = rand(GRID_H)
   end
 
+
+
   def draw
     #Circle.new(x: @apple_x * GRID, y: @apple_y * GRID, radius: (GRID/2), sectors: 32, color: '#b7b0b0')
     Square.new(x: @apple_x * GRID, y: @apple_y * GRID, size: GRID - 1, color: '#b7b0b0')
+    Text.new("Wynik: #{@points}", x:10, y:10, size:20)
   end
 end
 
@@ -77,6 +92,11 @@ update do
   content.draw
   wezyk.draw
   wezyk.move
+
+  if Game_elements.snake_ate_apple?(wezyk.head_x, wezyk.head_y)
+    Game_elements.get_point
+  end
+
 end
 
 on :key_down do |event|
