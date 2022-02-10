@@ -53,7 +53,7 @@ on :key_down do |event|
     clear
          content = Game_elements.new
          wezyk = Snake.new
-  elsif event.key == 'space'
+  elsif event.key == 'space' #start the game
     menu.clear_stuff
     content.start
   end
